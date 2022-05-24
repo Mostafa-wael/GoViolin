@@ -2,11 +2,9 @@ pipeline {
     agent any
     environment{
         REPO_URL = 'https://github.com/Rosalita/GoViolin'
-        IMAGE_NAME = 'mostafaw/GoViolin'
+        IMAGE_NAME = 'mostafaw/goviolin'
         DOCKER_IMAGE = ''
         DOCKERHUB_CREDENTIALS='dockerhub_cred'
-
-
     }
     stages {
         stage('Clone git repo') {
