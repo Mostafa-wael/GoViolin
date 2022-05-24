@@ -5,7 +5,6 @@ pipeline {
         IMAGE_NAME = 'mostafaw/GoViolin'
         DOCKER_IMAGE = ''
 
-
     }
     stages {
         stage('Clone git repo') {
@@ -32,13 +31,14 @@ pipeline {
         }
         stage('Push')
         {
+            steps{
+
             withCredentials([usernamePassword(credentialsId: 'dockerhub_cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
-                {
                 sh """
                     docker login -u ${USERNAME} -p ${PASSWORD}
                     docker push $DOCKER_IMAGE
                 """    
-                }
+            }
         }
     }
 }
