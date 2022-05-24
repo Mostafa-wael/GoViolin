@@ -7,14 +7,14 @@ pipeline {
 
     }
     stages {
-        stage('Clone git repo') {
-            steps {
-                sh """
-                    rm -rf GoViolin
-                    git clone $REPO_URL
-                """  
-            }
-        }
+        // stage('Clone git repo') {
+        //     steps {
+        //         sh """
+        //             rm -rf GoViolin
+        //             git clone $REPO_URL
+        //         """  
+        //     }
+        // }
         stage('Build') {
             steps {
                 script
