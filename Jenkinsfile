@@ -4,17 +4,19 @@ pipeline {
         REPO_URL = 'https://github.com/Rosalita/GoViolin'
         IMAGE_NAME = 'mostafaw/GoViolin'
         DOCKER_IMAGE = ''
+        DOCKERHUB_CREDENTIALS='dockerhub_cred'
+
 
     }
     stages {
-        // stage('Clone git repo') {
-        //     steps {
-        //         sh """
-        //             rm -rf GoViolin
-        //             git clone $REPO_URL
-        //         """  
-        //     }
-        // }
+        stage('Clone git repo') {
+            steps {
+                sh """
+                    rm -rf GoViolin
+                    git clone $REPO_URL
+                """  
+            }
+        }
         stage('Build') {
             steps {
                 script
@@ -29,16 +31,14 @@ pipeline {
                     }
             }
         }
-        stage('Push')
-        {
-            steps{
-
-            withCredentials([usernamePassword(credentialsId: 'dockerhub_cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
-                sh """
-                    docker login -u ${USERNAME} -p ${PASSWORD}
-                    docker push $DOCKER_IMAGE
-                """    
+        stage('Deploy our image') { 
+            steps { 
+                script { 
+                    docker.withRegistry( '', DOCKERHUB_CREDENTIALS ) { 
+                        DOCKER_IMAGE.push() 
+                    }
+                } 
             }
-        }
-    }
+        } 
+	}
 }
