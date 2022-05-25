@@ -30,7 +30,7 @@ pipeline {
                 }
                 failure {
                     echo "======== Build Failed ========"
-                    mail to: "${EMAIL}",subject: "GOViolin Pipeline Failed Build",body: "Docker Image Faild to built"
+                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "The pipeline failed to build the image"
 
                 }
            }
@@ -52,9 +52,11 @@ pipeline {
              post {
                 success {
                     echo "======== Push Success ========"
+                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "The pipeline managed to push the image to Docker Hub"
                 }
                 failure {
                     echo "======== Push Failed ========"
+                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "The pipeline failed to push the image to Docker Hub"
                 }
            }
         } 
