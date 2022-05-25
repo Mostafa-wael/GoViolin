@@ -1,7 +1,7 @@
-def gv
 pipeline {
     agent any
     parameters {
+        booleanParam(name: 'build_image', defaultValue: false, description: 'whether to build the image or not')
         booleanParam(name: 'push_image', defaultValue: false, description: 'whether to push the image to docker hub or not')
     }
     environment{
@@ -9,47 +9,39 @@ pipeline {
         IMAGE_NAME = 'mostafaw/goviolin'
         DOCKER_IMAGE = ''
         DOCKERHUB_CREDENTIALS='dockerhub_cred'
+        EMAIL = 'mostafa.w.k000@gmail.com'
     }
     stages {
-        stage("init") { // just initializing the pipeline
-            steps {
-                script {
-                   echo 'Initializing the pipeline...'
-                   gv = load "script.groovy" 
+        stage('Build the Docker image') {
+            when {
+                expression {
+                    params.build_image
                 }
             }
-            post {
-                success {
-                    echo "======== Initialization Success ========"
-                }
-                failure {
-                    echo "======== Initialization Failed ========"
-                }
-           }
-        }
-        // stage('Clone the repo') { // cloning the repo everytime the pipeline is run
-        //     steps {
-        //         script {
-        //             echo 'Cloning the repo...'
-        //             gv.cloneTheRepo(repo_url: environment.REPO_URL)
-        //         }
-        //     }
-        // }
-        stage('Build') {
             steps {
                 script
                 {
                     DOCKER_IMAGE = docker.build IMAGE_NAME + ":$BUILD_NUMBER" 
                 }
             }
-            post {
-                  always
-                    {
-                        echo 'Finished..'
-                    }
-            }
+           post {
+                success {
+                    echo "======== Build Success ========"
+                }
+                failure {
+                    echo "======== Build Failed ========"
+                    mail to: "${EMAIL}",subject: "GOViolin Pipeline Failed Build",body: "Docker Image Faild to built"
+
+                }
+           }
         }
-        stage('Deploy our image') { 
+        stage('Push The image to Docker Hub') { 
+            when {
+                expression {
+                    params.build_image
+                    params.push_image
+                }
+            }
             steps { 
                 script { 
                     docker.withRegistry( '', DOCKERHUB_CREDENTIALS ) { 
@@ -57,6 +49,14 @@ pipeline {
                     }
                 } 
             }
+             post {
+                success {
+                    echo "======== Push Success ========"
+                }
+                failure {
+                    echo "======== Push Failed ========"
+                }
+           }
         } 
 	}
 }
