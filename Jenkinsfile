@@ -6,7 +6,8 @@ pipeline {
     }
     environment{
         REPO_URL = 'https://github.com/Rosalita/GoViolin'
-        IMAGE_NAME = 'mostafaw/goviolin'
+        DOCKERHUB_REGISTRY='mostafaw'
+        IMAGE_NAME = 'goviolin'
         DOCKER_IMAGE = ''
         DOCKERHUB_CREDENTIALS='dockerhub_cred'
         EMAIL = 'mostafa.w.k000@gmail.com'
@@ -21,7 +22,9 @@ pipeline {
             steps {
                 script
                 {
-                    DOCKER_IMAGE = docker.build IMAGE_NAME + ":$BUILD_NUMBER" 
+                    sh 'docker build -t ${DOCKERHUB_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER} .'
+
+                    // DOCKER_IMAGE = docker.build IMAGE_NAME + ":$BUILD_NUMBER" 
                 }
             }
            post {
@@ -30,8 +33,7 @@ pipeline {
                 }
                 failure {
                     echo "======== Build Failed ========"
-                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "The pipeline failed to build the image"
-
+                    // mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "The pipeline failed to build the image"
                 }
            }
         }
@@ -43,20 +45,23 @@ pipeline {
                 }
             }
             steps { 
+                withCredentials([usernamePassword(credentialsId: ${DOCKERHUB_CREDENTIALS}, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
                 script { 
-                    docker.withRegistry( '', DOCKERHUB_CREDENTIALS ) { 
-                        DOCKER_IMAGE.push() 
-                    }
+                    sh 
+                    """
+                        docker login -u ${USERNAME} -p ${PASSWORD}
+                        docker push ${DOCKERHUB_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER}
+                    """    
                 } 
             }
              post {
                 success {
                     echo "======== Push Success ========"
-                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "The pipeline managed to push the image to Docker Hub"
+                    // mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "The pipeline managed to push the image to Docker Hub"
                 }
                 failure {
                     echo "======== Push Failed ========"
-                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "The pipeline failed to push the image to Docker Hub"
+                    // mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "The pipeline failed to push the image to Docker Hub"
                 }
            }
         } 
