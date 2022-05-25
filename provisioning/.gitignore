@@ -1,9 +1,3 @@
-# Compiled Source #
-###################
-
-*.exe
-GoViolin/GoViolin
-
 # Local .terraform directories
 **/.terraform/*
 *.terraform*
@@ -22,5 +16,3 @@ crash.log
 # to change depending on the environment.
 #
 #*.tfvars
-provisioning/credentials
-provisioning/test-web-server.pem
