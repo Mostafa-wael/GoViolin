@@ -18,15 +18,23 @@ pipeline {
                    gv = load "script.groovy" 
                 }
             }
-        }
-        stage('Clone the repo') { // cloning the repo everytime the pipeline is run
-            steps {
-                script {
-                    echo 'Cloning the repo...'
-                    gv.cloneTheRepo(repo_url: environment.REPO_URL)
+            post {
+                success {
+                    echo "======== Initialization Success ========"
                 }
-            }
+                failure {
+                    echo "======== Initialization Failed ========"
+                }
+           }
         }
+        // stage('Clone the repo') { // cloning the repo everytime the pipeline is run
+        //     steps {
+        //         script {
+        //             echo 'Cloning the repo...'
+        //             gv.cloneTheRepo(repo_url: environment.REPO_URL)
+        //         }
+        //     }
+        // }
         stage('Build') {
             steps {
                 script
