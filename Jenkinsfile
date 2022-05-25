@@ -1,5 +1,9 @@
+def gv
 pipeline {
     agent any
+    parameters {
+        booleanParam(name: 'push_image', defaultValue: false, description: 'whether to push the image to docker hub or not')
+    }
     environment{
         REPO_URL = 'https://github.com/Rosalita/GoViolin'
         IMAGE_NAME = 'mostafaw/goviolin'
@@ -7,12 +11,20 @@ pipeline {
         DOCKERHUB_CREDENTIALS='dockerhub_cred'
     }
     stages {
-        stage('Clone git repo') {
+        stage("init") { // just initializing the pipeline
             steps {
-                sh """
-                    rm -rf GoViolin
-                    git clone $REPO_URL
-                """  
+                script {
+                   echo 'Initializing the pipeline...'
+                   gv = load "script.groovy" 
+                }
+            }
+        }
+        stage('Clone the repo') { // cloning the repo everytime the pipeline is run
+            steps {
+                script {
+                    echo 'Cloning the repo...'
+                    gv.cloneTheRepo(repo_url: environment.REPO_URL)
+                }
             }
         }
         stage('Build') {
