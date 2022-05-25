@@ -5,10 +5,8 @@ pipeline {
         booleanParam(name: 'push_image', defaultValue: false, description: 'whether to push the image to docker hub or not')
     }
     environment{
-        REPO_URL = 'https://github.com/Rosalita/GoViolin'
         DOCKERHUB_REGISTRY='mostafaw'
         IMAGE_NAME = 'goviolin'
-        DOCKER_IMAGE = ''
         DOCKERHUB_CREDENTIALS='dockerhub_cred'
         EMAIL = 'mostafa.w.k000@gmail.com'
     }
@@ -23,13 +21,12 @@ pipeline {
                 script
                 {
                     sh 'docker build -t ${DOCKERHUB_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER} .'
-
-                    // DOCKER_IMAGE = docker.build IMAGE_NAME + ":$BUILD_NUMBER" 
                 }
             }
            post {
                 success {
                     echo "======== Build Success ========"
+                    // mail to: "${EMAIL}",subject: "GoViolin Pipeline FaiSuccededled",body: "The pipeline managed to build the image"
                 }
                 failure {
                     echo "======== Build Failed ========"
@@ -45,10 +42,10 @@ pipeline {
                 }
             }
             steps { 
-                withCredentials([usernamePassword(credentialsId: ${DOCKERHUB_CREDENTIALS}, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
-                script { 
-                    sh 
-                    """
+                
+                withCredentials([usernamePassword(credentialsId: DOCKERHUB_CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
+                { 
+                    sh """
                         docker login -u ${USERNAME} -p ${PASSWORD}
                         docker push ${DOCKERHUB_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER}
                     """    
