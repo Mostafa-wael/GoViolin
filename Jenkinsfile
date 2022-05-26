@@ -103,7 +103,7 @@ pipeline {
             steps { 
                     sh 'helm upgrade --install goviolin-chart  ./goviolin-chart'
             }
-             post {
+            post {
                 success {
                     echo "======== Deployemnt Success ========"
                     mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "The pipeline managed to deploy the service"
@@ -115,3 +115,4 @@ pipeline {
            }
         } 
 }
+
