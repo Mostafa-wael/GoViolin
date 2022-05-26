@@ -12,12 +12,12 @@ pipeline {
         EMAIL = 'mostafa.w.k000@gmail.com'
     }
     stages {
+        stage('Test') {
         when {
                 expression {
                     params.run_tests
                 }
             }
-        stage('Test') {
             environment {
                 GOPATH = '/root/go'
                 GOMODCACHE = '/root/go/pkg/mod'
