@@ -33,6 +33,11 @@ The pipeline supports three stages: Run the tests, Build the image and Push the 
 - Get the URL: `minikube service goviolin-service --url`
 - Expose the port (optional): `minikube tunnel`
 
+# Helm
+
+- Install the chart: `helm install goviolin-chart  ./goviolin-chart`
+- Update the chart values: `helm upgrade --install goviolin-chart  ./goviolin-chart`
+- Get the URL: `minikube service goviolin-chart --url`
 # Terraform
 - Deploy the infrastructure: `terraform apply`
 - Destroy the infrastructure: `terraform destroy`
