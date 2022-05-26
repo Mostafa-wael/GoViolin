@@ -40,6 +40,11 @@ Use helm charts to manage k8s manifests
 - Update the chart values: `helm upgrade --install goviolin-chart  ./goviolin-chart`
 - Get the URL: `minikube service goviolin-chart --url`
 ---
-# Terraform
+# Provisioning aka Terraform
 - Deploy the infrastructure: `terraform apply`
 - Destroy the infrastructure: `terraform destroy`
+- Stop the instance: `./stop-connection.sh GoViolin`
+- Start the instance: `./start-connection.sh GoViolin`
+
+# Deployment
+- You can access the website from: `http://ec2-3-138-106-140.us-east-2.compute.amazonaws.com/`

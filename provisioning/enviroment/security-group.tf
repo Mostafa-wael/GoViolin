@@ -12,22 +12,25 @@ resource "aws_security_group" "sg" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
-  ingress {
-    description      = "HTTP from VPC"
-    from_port        = 8080
-    to_port          = 8080
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-  ingress {
-    description      = "Another HTTP from VPC"
-    from_port        = 3000
-    to_port          = 3000
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
+    
+    ingress { // Access http
+        cidr_blocks = [
+        "0.0.0.0/0"
+        ]
+        from_port = 80  
+        to_port = 80    
+        protocol = "tcp"
+    }
+
+    
+    ingress { // Access jenkins
+        cidr_blocks = [
+        "0.0.0.0/0"
+        ]
+        from_port = 8080  
+        to_port = 8080   
+        protocol = "tcp"
+    }
 
   egress {
     from_port        = 0
