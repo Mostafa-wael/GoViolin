@@ -33,11 +33,11 @@ pipeline {
             post {
                 success {
                     echo "======== Tests Success ========"
-                    // mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "All the tests passed"
+                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "All the tests passed"
                 }
                 failure {
                     echo "======== Tests Failed ========"
-                    // mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "Tests failed"
+                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "Tests failed"
                 }
            }
         }
@@ -57,11 +57,11 @@ pipeline {
            post {
                 success {
                     echo "======== Build Success ========"
-                    // mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "The pipeline managed to build the image"
+                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "The pipeline managed to build the image"
                 }
                 failure {
                     echo "======== Build Failed ========"
-                    // mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "The pipeline failed to build the image"
+                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "The pipeline failed to build the image"
                 }
            }
         }
@@ -85,11 +85,11 @@ pipeline {
              post {
                 success {
                     echo "======== Push Success ========"
-                    // mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "The pipeline managed to push the image to Docker Hub"
+                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "The pipeline managed to push the image to Docker Hub"
                 }
                 failure {
                     echo "======== Push Failed ========"
-                    // mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "The pipeline failed to push the image to Docker Hub"
+                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "The pipeline failed to push the image to Docker Hub"
                 }
            }
         } 
