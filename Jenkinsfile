@@ -6,11 +6,12 @@ pipeline {
         booleanParam(name: 'push_image', defaultValue: false, description: 'whether to push the image to docker hub or not')
     }
     environment{
-        DOCKERHUB_REGISTRY='mostafaw'
+        DOCKERHUB_REGISTRY ='mostafaw'
+        IMAGE_TAG = 'latest' //  or ${BUILD_NUMBER}
         IMAGE_NAME = 'goviolin'
         DOCKERHUB_CREDENTIALS='dockerhub_cred'
         EMAIL = 'mostafa.w.k000@gmail.com'
-                GO111MODULE = 'on'
+        GO111MODULE = 'on'
         root = tool type: 'go', name: 'GO 1.16' //Ensure the desired Go version is installed
     }
     stages {
@@ -51,7 +52,7 @@ pipeline {
             steps {
                 script
                 {
-                    sh 'docker build -t ${DOCKERHUB_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER} .'
+                    sh 'docker build -t ${DOCKERHUB_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} .'
                 }
             }
            post {
