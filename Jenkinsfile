@@ -1,6 +1,7 @@
 pipeline {
     agent any
     parameters {
+        booleanParam(name: 'run_tests', defaultValue: false, description: 'whether to test the repo or not')
         booleanParam(name: 'build_image', defaultValue: false, description: 'whether to build the image or not')
         booleanParam(name: 'push_image', defaultValue: false, description: 'whether to push the image to docker hub or not')
     }
@@ -11,6 +12,11 @@ pipeline {
         EMAIL = 'mostafa.w.k000@gmail.com'
     }
     stages {
+        when {
+                expression {
+                    params.run_tests
+                }
+            }
         stage('Test') {
             environment {
                 GOPATH = '/root/go'
