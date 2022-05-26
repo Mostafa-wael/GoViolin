@@ -10,6 +10,7 @@ pipeline {
         IMAGE_NAME = 'goviolin'
         DOCKERHUB_CREDENTIALS='dockerhub_cred'
         EMAIL = 'mostafa.w.k000@gmail.com'
+                GO111MODULE = 'on'
         root = tool type: 'go', name: 'GO 1.18' //Ensure the desired Go version is installed
     }
     stages {
@@ -21,10 +22,12 @@ pipeline {
             }
             steps {
                 // Export environment variables pointing to the directory where Go was installed and run steps
-                withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin"]) {
-                    sh """
-                       go version
-                    """    
+                withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin", "GOBIN=${root}/bin", "GOPATH=${root}/go"]) {
+                  sh """
+                    go mod tidy
+                    go mod vendor
+                    go test ./... 
+                    """   
                 }
             }
         }
