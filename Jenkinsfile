@@ -19,21 +19,11 @@ pipeline {
                     params.run_tests
                 }
             }
-            environment {
-                GOPATH = '/root/go'
-                GOMODCACHE = '/root/go/pkg/mod'
-                GOCACHE = '/root/.cache/go-build'
-                GOENV = '/root/.config/go/env'
-            }
-           
             steps {
                 // Export environment variables pointing to the directory where Go was installed and run steps
                 withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin"]) {
                     sh """
-                        go mod vendor
-                        go mod download
-                        go mod verify
-                        go test ./...
+                       go version
                     """    
                 }
             }
