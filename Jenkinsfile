@@ -102,7 +102,6 @@ pipeline {
             }
             steps { 
                     sh 'helm upgrade --install goviolin-chart  ./goviolin-chart'
-                } 
             }
              post {
                 success {
