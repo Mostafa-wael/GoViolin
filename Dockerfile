@@ -1,5 +1,5 @@
 # The base image to build the application on top of it
-FROM golang:1.18.2-alpine3.15 AS builder
+FROM golang:1.16.7-alpine3.15 AS builder
 
 # Create a directory to work in
 RUN mkdir /app
