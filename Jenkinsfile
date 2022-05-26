@@ -31,6 +31,7 @@ pipeline {
                 }
             }
             steps {
+                sh 'cd GoViolin'
                 // Get tool to convert go test results to JUnit XML reports.
                 sh 'go get -u github.com/jstemmer/go-junit-report'
                 // Redirect stderr to stdout and pipe both to the tool. Always return 0,
