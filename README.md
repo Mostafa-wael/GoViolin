@@ -18,9 +18,9 @@ Access port from Minikube: `minikube service goviolin-service --url` or `minikub
 Run test:
 ```
 go mod init
-go build -o runnable.o .
 go mod tidy
+go build -o runnable.o .
 go mod vendor
-go test
+go test ./...
 
 ```
