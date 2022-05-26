@@ -5,13 +5,10 @@ FROM golang:1.18.2-alpine3.15 AS builder
 RUN mkdir /app
 
 # Copy the application to the directory
-COPY ./GoViolin /app
+COPY ./ /app
 
 # Change the working directory to /app
 WORKDIR /app
-
-# Initialize the project
-RUN go mod init
 
 # Build the binaries
 RUN go build -o runnable.o .
