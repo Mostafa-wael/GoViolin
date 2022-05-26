@@ -19,8 +19,8 @@ Run test:
 ```
 go mod init
 go mod tidy
-go build -o runnable.o .
 go mod vendor
+go build -o runnable.o .
 go test ./...
 
 ```
