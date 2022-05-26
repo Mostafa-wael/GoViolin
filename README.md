@@ -1,3 +1,5 @@
+
+GoViolin is a helpful way to practice violin written in Go. Listen to any scale or arpeggio with a few mouse clicks. Play along to improve your intonation.
 # Use GO Locally 
 **Build, run and test Go locally:**
 - Initialize the module: 
