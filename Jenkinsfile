@@ -1,4 +1,5 @@
-pipeline {
+pipeline 
+{
     agent any
     parameters {
         booleanParam(name: 'run_tests', defaultValue: false, description: 'whether to test the repo or not')
@@ -15,7 +16,8 @@ pipeline {
         GO111MODULE = 'on'
         root = tool type: 'go', name: 'GO 1.16' //Ensure the desired Go version is installed
     }
-    stages {
+    stages 
+    {
         stage('Test') {
             when {
                 expression {
@@ -33,10 +35,6 @@ pipeline {
                 }
             }
             post {
-                success {
-                    echo "======== Tests Success ========"
-                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "All the tests passed"
-                }
                 failure {
                     echo "======== Tests Failed ========"
                     mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "Tests failed"
@@ -56,10 +54,6 @@ pipeline {
                 }
             }
            post {
-                success {
-                    echo "======== Build Success ========"
-                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "The pipeline managed to build the image"
-                }
                 failure {
                     echo "======== Build Failed ========"
                     mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "The pipeline failed to build the image"
@@ -83,11 +77,7 @@ pipeline {
                     """    
                 } 
             }
-             post {
-                success {
-                    echo "======== Push Success ========"
-                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "The pipeline managed to push the image to Docker Hub"
-                }
+            post{
                 failure {
                     echo "======== Push Failed ========"
                     mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "The pipeline failed to push the image to Docker Hub"
@@ -104,10 +94,6 @@ pipeline {
                     sh 'helm upgrade --install goviolin-chart  ./goviolin-chart'
             }
             post {
-                success {
-                    echo "======== Deployemnt Success ========"
-                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "The pipeline managed to deploy the service"
-                }
                 failure {
                     echo "======== Deployemnt Failed ========"
                     mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "The pipeline failed to deploy the service"
@@ -115,5 +101,15 @@ pipeline {
            }
         } 
     }
+    post {
+            success {
+                echo "======== Pipeline Success ========"
+                mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "The pipeline managed to run successfully"
+            }
+            failure {
+                echo "======== Pipeline Failed ========"
+                mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "The pipeline failed failed"
+            }
+         }
 }
 
