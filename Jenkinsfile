@@ -10,6 +10,7 @@ pipeline {
         IMAGE_NAME = 'goviolin'
         DOCKERHUB_CREDENTIALS='dockerhub_cred'
         EMAIL = 'mostafa.w.k000@gmail.com'
+        root = tool type: 'go', name: 'GO 1.18' //Ensure the desired Go version is installed
     }
     stages {
         stage('Test') {
@@ -24,20 +25,17 @@ pipeline {
                 GOCACHE = '/root/.cache/go-build'
                 GOENV = '/root/.config/go/env'
             }
-            agent {
-                // Use the Dockerfile as the agent.
-                dockerfile {
-                    filename 'Dockerfile'
-                    dir '.'
-                    // Stop at the builder stage to access the test files
-                    additionalBuildArgs  '--target builder' 
-                    // Run as root and share pkg folder between host and docker for caching
-                    args '-v $HOME/go/pkg:/root/go/pkg --user 0' 
-                    reuseNode true
-                }
-            }
+           
             steps {
-                sh 'go test -v ./...'
+                // Export environment variables pointing to the directory where Go was installed and run steps
+                withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin"]) {
+                    sh """
+                        go mod vendor
+                        go mod download
+                        go mod verify
+                        go test ./...
+                    """    
+                }
             }
         }
 
