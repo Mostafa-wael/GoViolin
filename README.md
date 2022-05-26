@@ -1,25 +1,38 @@
-
+# Use GO Locally 
+**Build, run and test Go locally:**
+- Initialize the module: 
+  - `go mod init github.com/Rosalita/GoViolin`
+  - `go mod tidy`
+  - `go mod vendor`
+- Build a runnable binary: `go build -o runnable.o .`
+- Run the binary: `./runnable.o`
+- Run the tests: `go test ./...`
+--- 
+# Docker
+The Docker image is based on the concept of multi-stage build. We use a builder stage to build the runnable binary and another light weight stage to run it. The final image using this approach is very small; less than the original image by a factor of 5!
 - Build the Docker image: `docker build -t mostafaw/goviolin:latest .`
 - Run the Docker image: `docker run -p 3000:8080 mostafaw/goviolin:latest`
+---
+# Docker Compose
+We have used Docker compose here to encapsulate the parameters passed during running the docker image. 
 - Docker compose: `docker-compose -f docker-compose.yaml up`
+---
+# Jenkins
+The pipeline supports three stages: Run the tests, Build the image and Push the image to Docker Hub. It also supports sending emails with the pipeline status. The pipeline can be easily configured by specifying parameters when running it. 
+- Run Jenkins: `sudo systemctl start jenkins` on port `8080`
+- Get status(e.g.: password) from Jenkins: `sudo systemctl status jenkins` 
+- Stop Jenkins: `sudo systemctl stop jenkins` 
+---
+# Kubernetes
 
-- To run Jenkins: `sudo systemctl start jenkins` on port `8080`
-- To stop Jenkins: `sudo systemctl stop jenkins` 
-- To get status from Jenkins: `sudo systemctl status jenkins` 
+**Deploy & access a service in kubernetes:**
 
-- before start: `eval $(minikube docker-env)`
-- Start Minikube: `minikube start`
-- List pods: `minikube kubectl -- get pods -A`
-- list: `kubectl get pods `, `kubectl get services `, `kubectl get deployment`
-- delete pod: `kubectl delete pod <name> `
-- expose IP: `minikube tunnel`
-- Access port from Minikube: `minikube service goviolin-service --url` 
+- Start the local cluster: `minikube start`
+- Create the deployment  `kubectl apply -f deployment.yaml `
+- Create the service: `kubectl apply -f service.yaml`
+- Get the URL: `minikube service goviolin-service --url`
+- Expose the port (optional): `minikube tunnel`
 
-Run test:
-```
-go mod init github.com/Rosalita/GoViolin
-go mod tidy
-go mod vendor
-go build -o runnable.o .
-go test ./...
-```
+# Terraform
+- Deploy the infrastructure: `terraform apply`
+- Destroy the infrastructure: `terraform destroy`

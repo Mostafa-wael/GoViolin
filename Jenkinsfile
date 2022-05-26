@@ -16,7 +16,7 @@ pipeline {
     }
     stages {
         stage('Test') {
-        when {
+            when {
                 expression {
                     params.run_tests
                 }
@@ -42,7 +42,6 @@ pipeline {
                 }
            }
         }
-
         stage('Build the Docker image') {
             when {
                 expression {
