@@ -14,3 +14,13 @@ Start Minikube: `minikube start`
 expose IP: `minikube tunnel`
 
 Access port from Minikube: `minikube service goviolin-service --url` or `minikube service goviolin-service`
+
+Run test:
+```
+go mod init
+go build -o runnable.o .
+go mod tidy
+go mod vendor
+go test
+
+```
