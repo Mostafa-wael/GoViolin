@@ -1,21 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: go-violin
+  name: goviolin
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      name: go-violin
+      app: goviolin
   template:
     metadata:
       labels:
-        name: go-violin
+        app: goviolin
     spec:
       containers:
-      - name: app
-        image: mostafaw/goviolin:latest 
-        imagePullPolicy: IfNotPresent
+      - name: goviolin
+        image: mostafaw/goviolin:latest
         resources:
           limits:
             memory: "128Mi"

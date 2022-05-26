@@ -1,19 +1,19 @@
-Build the Docker image: `docker build -t mostafaw/goviolin:latest .`
 
-Run the Docker image: `docker run -p 3000:8080 mostafaw/goviolin:latest`
+- Build the Docker image: `docker build -t mostafaw/goviolin:latest .`
+- Run the Docker image: `docker run -p 3000:8080 mostafaw/goviolin:latest`
+- Docker compose: `docker-compose -f docker-compose.yaml up`
 
-Docker compose: `docker-compose -f docker-compose.yaml up`
+- To run Jenkins: `sudo systemctl start jenkins` on port `8080`
+- To stop Jenkins: `sudo systemctl stop jenkins` 
+- To get status from Jenkins: `sudo systemctl status jenkins` 
 
-To run Jenkins: `sudo systemctl start jenkins` on port `8080`
-
-To stop Jenkins: `sudo systemctl stop jenkins` 
-To get status from Jenkins: `sudo systemctl status jenkins` 
-
-Start Minikube: `minikube start`
-
-expose IP: `minikube tunnel`
-
-Access port from Minikube: `minikube service goviolin-service --url` or `minikube service goviolin-service`
+- before start: `eval $(minikube docker-env)`
+- Start Minikube: `minikube start`
+- List pods: `minikube kubectl -- get pods -A`
+- list: `kubectl get pods `, `kubectl get services `, `kubectl get deployment`
+- delete pod: `kubectl delete pod <name> `
+- expose IP: `minikube tunnel`
+- Access port from Minikube: `minikube service goviolin-service --url` 
 
 Run test:
 ```
