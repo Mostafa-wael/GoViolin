@@ -11,7 +11,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS='dockerhub_cred'
         EMAIL = 'mostafa.w.k000@gmail.com'
                 GO111MODULE = 'on'
-        root = tool type: 'go', name: 'GO 1.18' //Ensure the desired Go version is installed
+        root = tool type: 'go', name: 'GO 1.16' //Ensure the desired Go version is installed
     }
     stages {
         stage('Test') {
