@@ -1,0 +1,6 @@
+version: "3"
+services:
+  goviolin:
+    image: mostafaw/goviolin:latest
+    ports:
+     - 3000:8080
