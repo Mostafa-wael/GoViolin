@@ -79,7 +79,7 @@ pipeline {
                 { 
                     sh """
                         docker login -u ${USERNAME} -p ${PASSWORD}
-                        docker push ${DOCKERHUB_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER}
+                        docker push ${DOCKERHUB_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
                     """    
                 } 
             }
