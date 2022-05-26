@@ -46,5 +46,6 @@ Use helm charts to manage k8s manifests
 - Stop the instance: `./stop-connection.sh GoViolin`
 - Start the instance: `./start-connection.sh GoViolin`
 
+---
 # Deployment
-- You can access the website from: `http://ec2-3-138-106-140.us-east-2.compute.amazonaws.com/`
+- You can access the website from [here](http://ec2-3-138-106-140.us-east-2.compute.amazonaws.com/)
