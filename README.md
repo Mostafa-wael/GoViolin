@@ -25,7 +25,7 @@ The pipeline supports three stages: Run the tests, Build the image and Push the 
 ---
 # Kubernetes
 
-**Deploy & access a service in kubernetes:**
+Deploy & access a service in kubernetes:
 
 - Start the local cluster: `minikube start`
 - Create the deployment  `kubectl apply -f deployment.yaml `
@@ -33,11 +33,13 @@ The pipeline supports three stages: Run the tests, Build the image and Push the 
 - Get the URL: `minikube service goviolin-service --url`
 - Expose the port (optional): `minikube tunnel`
 
+---
 # Helm
-
+Use helm charts to manage k8s manifests 
 - Install the chart: `helm install goviolin-chart  ./goviolin-chart`
 - Update the chart values: `helm upgrade --install goviolin-chart  ./goviolin-chart`
 - Get the URL: `minikube service goviolin-chart --url`
+---
 # Terraform
 - Deploy the infrastructure: `terraform apply`
 - Destroy the infrastructure: `terraform destroy`

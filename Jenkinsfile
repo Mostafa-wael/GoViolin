@@ -4,6 +4,7 @@ pipeline {
         booleanParam(name: 'run_tests', defaultValue: false, description: 'whether to test the repo or not')
         booleanParam(name: 'build_image', defaultValue: false, description: 'whether to build the image or not')
         booleanParam(name: 'push_image', defaultValue: false, description: 'whether to push the image to docker hub or not')
+        booleanParam(name: 'deploy', defaultValue: false, description: 'whether to deploy the service or not')
     }
     environment{
         DOCKERHUB_REGISTRY ='mostafaw'
@@ -90,6 +91,27 @@ pipeline {
                 failure {
                     echo "======== Push Failed ========"
                     mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "The pipeline failed to push the image to Docker Hub"
+                }
+           }
+        } 
+        stage('Deploy the service using Helm') {
+            when {
+                expression {
+                    params.deploy
+                }
+            }
+            steps { 
+                    sh 'helm upgrade --install goviolin-chart  ./goviolin-chart'
+                } 
+            }
+             post {
+                success {
+                    echo "======== Deployemnt Success ========"
+                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "The pipeline managed to deploy the service"
+                }
+                failure {
+                    echo "======== Deployemnt Failed ========"
+                    mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "The pipeline failed to deploy the service"
                 }
            }
         } 
