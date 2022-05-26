@@ -30,6 +30,16 @@ pipeline {
                     """   
                 }
             }
+            post {
+                success {
+                    echo "======== Tests Success ========"
+                    // mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "All the tests passed"
+                }
+                failure {
+                    echo "======== Tests Failed ========"
+                    // mail to: "${EMAIL}",subject: "GoViolin Pipeline Failed",body: "Tests failed"
+                }
+           }
         }
 
         stage('Build the Docker image') {
@@ -47,7 +57,7 @@ pipeline {
            post {
                 success {
                     echo "======== Build Success ========"
-                    // mail to: "${EMAIL}",subject: "GoViolin Pipeline FaiSuccededled",body: "The pipeline managed to build the image"
+                    // mail to: "${EMAIL}",subject: "GoViolin Pipeline Succeded",body: "The pipeline managed to build the image"
                 }
                 failure {
                     echo "======== Build Failed ========"
