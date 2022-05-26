@@ -31,28 +31,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'cd GoViolin'
-                // Get tool to convert go test results to JUnit XML reports.
-                sh 'go get -u github.com/jstemmer/go-junit-report'
-                // Redirect stderr to stdout and pipe both to the tool. Always return 0,
-                // to be able to report test failures.
-                sh 'go test -v ./... 2>&1 | /root/go/bin/go-junit-report > report.xml || true'
-                // Archive test report.
-                junit skipPublishingChecks: true, testResults: 'report.xml'
-                // Generate coverage info.
-                sh 'go test -covermode=count -coverprofile=count.out fmt'
-                sh 'go tool cover -func=count.out'
-                // Generate an HTML report from it.
-                sh 'go tool cover -html=count.out -o cover.html'
-                // Archive this report.
-                publishHTML target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: false,
-                    reportDir: '.',
-                    reportFiles: 'cover.html',
-                    reportName: 'Coverage Report'
-                ]
+                sh 'go test -v ./...'
             }
         }
 
