@@ -24,4 +24,3 @@ crash.log
 #*.tfvars
 provisioning/credentials
 provisioning/test-web-server.pem
-GoViolin/go.mod
