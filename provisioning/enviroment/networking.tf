@@ -34,7 +34,7 @@ resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.app_vpc.id
 
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block = "0.0.0.0/0" # To depict the default route as a destination subnet
     gateway_id = aws_internet_gateway.igw.id
   }
 

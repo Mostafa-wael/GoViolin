@@ -1,4 +1,3 @@
-
 GoViolin is a helpful way to practice violin written in Go. Listen to any scale or arpeggio with a few mouse clicks. Play along to improve your intonation.
 # Use GO Locally 
 **Build, run and test Go locally:**
@@ -47,7 +46,3 @@ Use helm charts to manage k8s manifests
 - Destroy the infrastructure: `terraform destroy`
 - Stop the instance: `./stop-connection.sh GoViolin`
 - Start the instance: `./start-connection.sh GoViolin`
-
----
-# Deployment
-- You can access the website from [here](http://ec2-3-138-106-140.us-east-2.compute.amazonaws.com/)
